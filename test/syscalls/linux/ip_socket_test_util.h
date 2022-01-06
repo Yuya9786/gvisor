@@ -144,6 +144,25 @@ void RecvTClass(int sock, char buf[], size_t* buf_size, int* out_tclass);
 // message.
 void SendTClass(int sock, char buf[], size_t buf_size, int tclass);
 
+// RecvTTL attempts to read buf_size bytes into buf, and then update buf_size
+// with the numbers of bytes actually read. It expects the IP_TTL cmsg to be
+// received. The buffer must already be allocated with at least buf_size size.
+void RecvTTL(int sock, char buf[], size_t* buf_size, int* out_ttl);
+
+// SendTTL sends a message using buf as payload and ttl as IP_TOS control
+// message.
+void SendTTL(int sock, char buf[], size_t buf_size, int ttl);
+
+// RecvHopLimit attempts to read buf_size bytes into buf, and then update
+// buf_size with the numbers of bytes actually read. It expects the
+// IPV6_HOPLIMIT cmsg to be received. The buffer must already be allocated with
+// at least buf_size size.
+void RecvHopLimit(int sock, char buf[], size_t* buf_size, int* out_hoplimit);
+
+// SendHopLimit sends a message using buf as payload and hoplimit as IP_HOPLIMIT
+// control message.
+void SendHopLimit(int sock, char buf[], size_t buf_size, int hoplimit);
+
 }  // namespace testing
 }  // namespace gvisor
 
