@@ -145,6 +145,12 @@ const (
 	// Protection eXtensions (MPX) bounds tables.
 	PR_MPX_DISABLE_MANAGEMENT = 44
 
+	// PR_SCHED_CORE is the option for core tagging related operations.
+	PR_SCHED_CORE              = 62
+	PR_SCHED_CORE_GET          = 0 // Core tag current thread or process.
+	PR_SCHED_CORE_SCOPE_THREAD = 0 // Limits the scope for PR_SCHED_CORE operations to the current thread. This used to be known as PIDTYPE_PID.
+	// See this patch for the in process migration effort. https://lore.kernel.org/lkml/20210826100025.pdakvmg24gomnuk5@wittgenstein/
+
 	// PR_SET_PTRACER allows a specific process (or any, if PR_SET_PTRACER_ANY is
 	// specified) to ptrace the current task.
 	PR_SET_PTRACER     = 0x59616d61
