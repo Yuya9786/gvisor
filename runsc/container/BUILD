@@ -25,6 +25,7 @@ go_library(
         "//runsc/cgroup",
         "//runsc/config",
         "//runsc/console",
+        "//runsc/flag",
         "//runsc/sandbox",
         "//runsc/specutils",
         "@com_github_cenkalti_backoff//:go_default_library",
@@ -43,18 +44,20 @@ go_test(
         "multi_container_test.go",
         "shared_volume_test.go",
     ],
-    # Only run the default platform for the tsan test, which should
-    # be compatible. For non-tsan builds, run all platforms.
-    args = select({
-        "//conditions:default": ["-test_platforms=%s" % ",".join(
-            [p for (p, tags) in platforms.items() if "manual" not in tags],
-        )],
-        "//tools:gotsan": ["-test_platforms=%s" % default_platform],
-    }),
     data = [
         "//runsc",
         "//test/cmd/test_app",
     ],
+    # Only run the default platform for the tsan test, which should
+    # be compatible. For non-tsan builds, run all platforms.
+    env = select({
+        "//conditions:default": {
+            "TEST_PLATFORMS": ",".join([p for (p, tags) in platforms.items() if "manual" not in tags]) or default_platform,
+        },
+        "//tools:gotsan": {
+            "TEST_PLATFORMS": default_platform,
+        },
+    }),
     library = ":container",
     shard_count = more_shards,
     tags = ["requires-kvm"],

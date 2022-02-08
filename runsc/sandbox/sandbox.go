@@ -48,6 +48,7 @@ import (
 	"gvisor.dev/gvisor/runsc/cgroup"
 	"gvisor.dev/gvisor/runsc/config"
 	"gvisor.dev/gvisor/runsc/console"
+	"gvisor.dev/gvisor/runsc/flag"
 	"gvisor.dev/gvisor/runsc/specutils"
 )
 
@@ -433,7 +434,7 @@ func (s *Sandbox) createSandboxProcess(conf *config.Config, args *Args, startSyn
 	nextFD := 3
 
 	binPath := specutils.ExePath
-	cmd := exec.Command(binPath, conf.ToFlags()...)
+	cmd := exec.Command(binPath, conf.ToFlags(flag.CommandLine)...)
 	cmd.SysProcAttr = &unix.SysProcAttr{}
 
 	// Open the log files to pass to the sandbox as FDs.

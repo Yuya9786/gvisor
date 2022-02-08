@@ -40,6 +40,7 @@ import (
 	"gvisor.dev/gvisor/runsc/cgroup"
 	"gvisor.dev/gvisor/runsc/config"
 	"gvisor.dev/gvisor/runsc/console"
+	"gvisor.dev/gvisor/runsc/flag"
 	"gvisor.dev/gvisor/runsc/sandbox"
 	"gvisor.dev/gvisor/runsc/specutils"
 )
@@ -869,7 +870,7 @@ func (c *Container) waitForStopped() error {
 
 func (c *Container) createGoferProcess(spec *specs.Spec, conf *config.Config, bundleDir string, attached bool) ([]*os.File, *os.File, error) {
 	// Start with the general config flags.
-	args := conf.ToFlags()
+	args := conf.ToFlags(flag.CommandLine)
 
 	var goferEnds []*os.File
 
